@@ -1,88 +1,71 @@
-# TPMG — brand landing page
+# TPMG website
 
-Single page, no build step. Open `index.html` in a browser to preview.
-Behind a password gate, same mechanism as before.
+Static 3-page site (Home, About, Contact) for TPMG, built to brand: navy
+`#2B3A55` / baby blue `#B7CEE0` / white, Times New Roman display headlines,
+Outfit for the wordmark, Inter for body copy. Plain HTML/CSS/JS — no build
+step, no framework.
 
-## Upload to GitHub / Vercel
+## Before you launch
 
-Two items go in the repo root:
+- **Replace placeholder contact info**: phone number, email, office address,
+  and DRE license number appear in `index.html`, `about.html`, `contact.html`,
+  and the shared footer in each file.
+- **Wire up the contact form**: `contact.html` currently posts nowhere —
+  `js/main.js` just shows a confirmation message so the page is demoable.
+  Easiest real options on Vercel:
+  - [Formspree](https://formspree.io) — change the `<form>` tag's `action` to
+    your Formspree endpoint and remove the `preventDefault()` block in
+    `js/main.js`.
+  - A Vercel serverless function (`/api/contact.js`) that emails you or writes
+    to a database — a bit more setup, full control.
+- **Pricing is intentionally omitted** from the site. Your fee schedule doc is
+  marked internal / pending legal review, so the site points people to
+  "contact us" instead of publishing rates. Add a pricing page once that
+  review is done, if you want rates public.
+- Swap `assets/crest.svg` for your actual AI-generated crest artwork whenever
+  it's ready — the current file is a simple placeholder built from the brand
+  guideline description (shield, columns, navy/baby blue).
 
-    index.html
-    media/          (2 files: hero-loop.mp4, hero-poster.jpg)
+## Run locally
 
-Use **Add file → Upload files**, drag both items in together so the `media`
-folder structure survives, and **Commit changes**. Vercel redeploys itself in
-about thirty seconds. Hard-refresh (Cmd/Ctrl+Shift+R) to see it.
+No build step needed. Either open `index.html` directly in a browser, or serve
+it locally so relative paths behave exactly like production:
 
-## Domain
+```bash
+npx serve .
+```
 
-Point `tpmg.app` at the Vercel project (or whatever host you use) once it's
-live. Nothing in the page itself is hard-coded to a domain.
+## Deploy
 
-## The password gate
+### Push to GitHub
 
-**Code: `TPMG`** — change it on the `PASSWORD` line in the script near the
-bottom of `index.html`. The gate copy, email address and phone placeholder
-live near the top of the gate markup and in the Contact section.
+```bash
+git init
+git add .
+git commit -m "Initial TPMG site"
+git branch -M main
+git remote add origin https://github.com/<your-username>/<your-repo>.git
+git push -u origin main
+```
 
-**The gate is cosmetic, not secure**, same as before: the page is fully
-downloaded before the gate appears, so anyone who views source sees
-everything. A `noindex, nofollow` tag keeps search engines out. For real
-protection, ask for the serverless version.
+### Launch on Vercel
 
-## What changed from the 1807 Glenoaks template
+1. Go to [vercel.com/new](https://vercel.com/new) and import the GitHub repo.
+2. Framework preset: **Other** (it's static — no build command, no output
+   directory needed).
+3. Click **Deploy**. Vercel will serve the files as-is.
 
-Removed entirely:
-- Market analysis section (CoStar submarket data)
-- Glendale city / demographics section (Esri data)
-- The amenity map / "the block" section
-- Parking section and the full photo gallery + lightbox
-- All 1807 Glenoaks / brokerage-listing specific copy (DRE numbers, "For
-  sale," asking price facts, etc.)
+Any push to `main` will auto-redeploy.
 
-Added:
-- **Hero**: your looped MP4 (`media/hero-loop.mp4`) plays muted/autoplay
-  behind the headline, with a still frame (`media/hero-poster.jpg`) as the
-  fallback if a browser blocks autoplay. Swap either file to change it —
-  same filenames, same spot.
-- **Mission statement** section near the top: five sentences, editable in
-  place (search for "Why TPMG exists").
-- **By the numbers** band: two large placeholder stats — *Units under
-  management* and *Total assets under management*. Both currently read
-  `[ Add unit count ]` / `[ Add AUM figure ]` — replace the text inside those
-  two `<dd class="tbd">` tags in the "BY THE NUMBERS" section with your real
-  figures (and drop the `tbd` class once they're real numbers, if you want
-  them in the accent color instead of dimmed).
-- **Fee schedule** section: management fee table, other recurring fees,
-  per-event fees, the onboarding fee scale (1st–6th+ property), and no-charge
-  services — all pulled from the TPMG fee schedule document.
-- Contact form fields reworded for a property owner inquiry (was a
-  commercial-buyer inquiry form).
+## File structure
 
-## A flag on the fee schedule
-
-The source fee schedule document is marked **"Internal working document —
-not for owner distribution until legal review is complete,"** and separately
-flags the tenant late fee (1% per day) as a term a CA attorney should review
-before it's relied on. I left both the late fee and the referral program out
-of/adjusted on the public page:
-
-- The **late fee row is included** (it's a real recurring fee), but the
-  attorney-review flag from the source doc is not reproduced verbatim on the
-  public site — you may want your attorney to sign off on that rate before
-  this goes live either way.
-- The **owner referral program** (unit banking, cash-out, discount caps) was
-  left off this page entirely — it's a more complex internal mechanism, not
-  obviously something you want prospects reverse-engineering `tpmg.app` to
-  understand. It can be added as its own section, or gated behind a client
-  portal, whenever you're ready.
-
-Recommend a final legal read before this page goes public, same as the
-launch plan already calls for on the PMA and fee structure.
-
-## Colors, type
-
-Unchanged design system: matte navy (#2B3A55) and baby blue (#B7CEE0)
-accents against the same dark/paper palette, Bricolage Grotesque for
-headings, Instrument Sans for body, IBM Plex Mono for labels — pulled from
-the TPMG brand guidelines doc.
+```
+tpmg-site/
+├── index.html
+├── about.html
+├── contact.html
+├── css/styles.css
+├── js/main.js
+├── assets/crest.svg
+└── README.md
+```
