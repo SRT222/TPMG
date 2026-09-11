@@ -66,7 +66,7 @@ header.solid{background:rgba(237,239,241,.94);backdrop-filter:blur(10px);border-
 
 /* ---------- HERO: looping video, full bleed ---------- */
 .hero{position:relative;height:100svh;min-height:600px;background:var(--paper);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
-.hero-media{position:absolute;inset:0}
+.hero-media{position:absolute;inset:0;z-index:0;isolation:isolate}
 #heroMap{width:100%;height:100%;background:var(--paper);opacity:0;transition:opacity 1s ease}
 #heroMap.loaded{opacity:1}
 .leaflet-control-attribution{font-family:var(--mono);font-size:10px}
